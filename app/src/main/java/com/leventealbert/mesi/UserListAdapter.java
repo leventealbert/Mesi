@@ -8,20 +8,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Collections;
 import java.util.List;
 
-public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.ViewHolder> {
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     private LayoutInflater mInflator;
     private int mViewResource;
+    private Context mContext;
 
     private List<User> mData = Collections.emptyList();
 
-    public CustomListAdapter(Context context, List<User> data, int viewResource){
+    public UserListAdapter(Context context, List<User> data, int viewResource){
         mInflator = LayoutInflater.from(context);
         mData = data;
         mViewResource = viewResource;
+        mContext = context;
     }
 
     @Override
@@ -33,8 +37,12 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         User current = mData.get(position);
-        holder.name.setText(current.fullName);
-        holder.image.setImageResource(current.iconId);
+        holder.name.setText(current.getFullName());
+
+        Picasso.with(mContext).load(current.getAvatar())
+                .error(R.drawable.user_avatar)
+                .placeholder(R.drawable.user_avatar)
+                .into(holder.image);
     }
 
     @Override

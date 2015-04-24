@@ -1,18 +1,16 @@
 package com.leventealbert.mesi;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +28,6 @@ public class NavigationDrawerFragment extends Fragment {
 //    private boolean mFromSavedInstanceState;
 
     private View mContainerView;
-    private RecyclerView mRecycleView;
-    private CustomListAdapter mUserAdapter;
 
 
     public NavigationDrawerFragment() {
@@ -53,25 +49,16 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        mRecycleView = (RecyclerView) layout.findViewById(R.id.fragment_navigation_drawer_list);
-        mUserAdapter = new CustomListAdapter(getActivity(), getData(), R.layout.user_list_row);
-        mRecycleView.setAdapter(mUserAdapter);
-        mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        Button settingsButton = (Button) layout.findViewById(R.id.fragment_navigation_drawer_settings);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+            }
+        });
+
         return layout;
-    }
-
-    public List<User> getData() {
-        List<User> data = new ArrayList<>();
-        int[] icons = {R.drawable.ic_settings_grey600_48dp};
-        String[] names = {"Settings"};
-
-        for (int i = 0; i < names.length && i < icons.length; i++) {
-            User current = new User();
-            current.fullName = names[i];
-            current.iconId = icons[i];
-            data.add(current);
-        }
-        return data;
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolBar) {

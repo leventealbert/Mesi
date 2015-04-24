@@ -15,6 +15,7 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -26,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         mToolBar = (Toolbar) findViewById(R.id.app_bar);
