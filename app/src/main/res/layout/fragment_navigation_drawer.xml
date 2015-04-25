@@ -26,7 +26,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/fragment_navigation_drawer_image_wrapper">
+        android:layout_below="@+id/fragment_navigation_drawer_image_wrapper"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/fragment_navigation_drawer_invite_user"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Invite User"
+            android:drawableLeft="@drawable/ic_perm_identity_grey600_24dp"
+            style="@style/DrawerButton"/>
         <Button
             android:id="@+id/fragment_navigation_drawer_settings"
             android:layout_width="match_parent"
