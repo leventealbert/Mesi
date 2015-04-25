@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp">
+    android:layout_height="72dp">
 
-    <com.leventealbert.mesi.RoundedImageView
+    <ImageView
         android:id="@+id/list_row_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -11,14 +11,33 @@
         android:layout_marginRight="16dp"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/user_avatar" />
+        android:src="@drawable/ic_account_circle_grey600_48dp" />
 
     <TextView
         android:id="@+id/list_row_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
         android:layout_marginLeft="72dp"
+        android:textColor="@color/primary_text"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
         android:text="@string/user_list_row_full_name" />
+
+    <TextView
+        android:id="@+id/list_row_subtile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:layout_below="@+id/list_row_name"
+        android:text="online"
+        android:textSize="14sp"
+        android:textColor="@color/secondary_text"
+        />
+
+    <TextView
+        android:id="@+id/list_row_messages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        style="@style/MessageNotificationNumber"/>
 </RelativeLayout>

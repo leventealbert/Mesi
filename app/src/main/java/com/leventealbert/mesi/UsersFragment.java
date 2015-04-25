@@ -8,9 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,13 +29,13 @@ import java.util.List;
 
 public class UsersFragment extends BaseFragment {
 
-    private RecyclerView mRecycleView;
+    private RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_users, container, false);
-        mRecycleView = (RecyclerView) layout.findViewById(R.id.fragment_users_list);
-        mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView = (RecyclerView) layout.findViewById(R.id.fragment_users_list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         /*Downloading data from below url*/
         new AsyncHttpTask(this).execute("http://mesi.leventealbert.com/api/users");
@@ -53,7 +56,7 @@ public class UsersFragment extends BaseFragment {
                 userList.add(item);
             }
 
-            mRecycleView.setAdapter(new UserListAdapter(getActivity(), userList, R.layout.user_list_row));
+            mRecyclerView.setAdapter(new UserListAdapter(getActivity(), userList, R.layout.user_list_row));
 
         } catch (JSONException e) {
             e.printStackTrace();
