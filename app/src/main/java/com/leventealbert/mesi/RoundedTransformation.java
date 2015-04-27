@@ -5,6 +5,8 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Shader;
 
 public class RoundedTransformation implements com.squareup.picasso.Transformation {
@@ -25,8 +27,10 @@ public class RoundedTransformation implements com.squareup.picasso.Transformatio
         final Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setShader(new BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        paint.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.DST_OVER));
 
         Bitmap output = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
+
         Canvas canvas = new Canvas(output);
         canvas.drawCircle((source.getWidth() - margin) / 2, (source.getHeight() - margin) / 2, radius - 2, paint);
 

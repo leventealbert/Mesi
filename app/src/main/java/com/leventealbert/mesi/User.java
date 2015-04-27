@@ -4,109 +4,110 @@ import org.json.JSONObject;
 
 public class User {
 
-    private String Id;
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String lat;
+    private String lng;
+    private String avatar;
+    private String teamId;
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        id = id;
     }
 
-    private String FirstName;
-
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        firstName = firstName;
     }
 
-    private String LastName;
-
     public String getLastName() {
-        return LastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
-    private String Email;
-
     public String getEmail() {
-        return Email;
+        return this.email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
-    private String Lat;
-
     public String getLat() {
-        return Lat;
+        return this.lat;
     }
 
     public void setLat(String lat) {
-        Lat = lat;
+        this.lat = lat;
     }
-
-    private String Lng;
 
     public String getLng() {
-        return Lng;
+        return this.lng;
     }
-
     public void setLng(String lng) {
-        Lng = lng;
+        this.lng = lng;
     }
-
-    private String Avatar;
 
     public String getAvatar() {
-        return Avatar;
+        return avatar;
     }
-
     public void setAvatar(String avatar) {
-        Avatar = avatar;
+        this.avatar = avatar;
     }
-
-    private String TeamId;
 
     public String getTeamId() {
-        return TeamId;
+        return teamId;
     }
-
     public void setTeamId(String teamId) {
-        TeamId = teamId;
+        this.teamId = teamId;
     }
 
     public String getFullName() {
-        return FirstName + ' ' + LastName;
+        return firstName + ' ' + lastName;
+    }
+
+    public Boolean isOnline() {
+        return firstName.startsWith("E") || firstName.startsWith("L");
+    }
+
+    public int getNewMessagesCount(){
+        int count = 0;
+        if (BaseApplication.getMessages() != null) {
+            for (Message message : BaseApplication.getMessages()) {
+                if (message.getFromId().equals(id) && message.getIsNew()) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public User(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public User(String id, String firstName, String lastName, String email, String lat, String lng, String avatar, String teamId) {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        Lat = lat;
-        Lng = lng;
-        Avatar = avatar;
-        TeamId = teamId;
-    }
-
-    public User(JSONObject json) {
-        Id = json.optString("id");
-        FirstName = json.optString("firstName");
-        LastName = json.optString("lastName");
-        Email = json.optString("email");
-        Lat = json.optString("lat");
-        Lng = json.optString("lng");
-        Avatar = json.optString("avatar");
-        TeamId = json.optString("teamId");
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.lat = lat;
+        this.lng = lng;
+        this.avatar = avatar;
+        this.teamId = teamId;
     }
 }

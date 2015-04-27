@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_message_list"
+        android:layout_above="@+id/activity_message_bottom_action">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/activity_message_bottom_action"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/highlight_color">
+        <EditText
+            android:id="@+id/activity_message_text"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"/>
+        <Button
+            android:id="@+id/activity_message_send"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/ic_send_grey600_48dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </LinearLayout>
+</RelativeLayout>
+

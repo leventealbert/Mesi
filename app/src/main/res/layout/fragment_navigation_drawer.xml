@@ -3,39 +3,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.leventealbert.mesi.NavigationDrawerFragment"
-    android:background="#DADADA">
+    android:background="@color/divider_color_dark">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/fragment_navigation_drawer_image_wrapper"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/message">
+        android:background="@drawable/message"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:id="@+id/fragment_navigation_drawer_image"
             android:layout_alignParentTop="true"
             android:src="@drawable/mesi_logo"
             android:adjustViewBounds="true"
             android:padding="20dp"/>
 
-    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@color/primary_color_light_opaque"
+            android:layout_alignParentBottom="true">
+
+            <ImageView
+                android:id="@+id/fragment_navigation_drawer_user_image"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/ic_account_circle_grey600_48dp" />
+
+            <TextView
+                android:id="@+id/fragment_navigation_drawer_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="72dp"
+                android:textColor="@color/primary_text"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                android:text="@string/user_list_row_full_name" />
+
+            <TextView
+                android:id="@+id/fragment_navigation_drawer_user_team"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="72dp"
+                android:layout_below="@+id/fragment_navigation_drawer_user_name"
+                android:text="online"
+                android:textSize="14sp"
+                android:textColor="@color/secondary_text" />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_below="@+id/fragment_navigation_drawer_image_wrapper"
         android:orientation="vertical">
-        <Button
+        <TextView
             android:id="@+id/fragment_navigation_drawer_invite_user"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Invite User"
             android:drawableLeft="@drawable/ic_perm_identity_grey600_24dp"
             style="@style/DrawerButton"/>
-        <Button
+        <TextView
             android:id="@+id/fragment_navigation_drawer_settings"
             android:layout_width="match_parent"
             android:layout_height="48dp"

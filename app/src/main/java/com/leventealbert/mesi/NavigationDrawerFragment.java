@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +53,15 @@ public class NavigationDrawerFragment extends Fragment {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
-        Button settingsButton = (Button) layout.findViewById(R.id.fragment_navigation_drawer_settings);
+        TextView inviteButton = (TextView) layout.findViewById(R.id.fragment_navigation_drawer_invite_user);
+        inviteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), InviteUserActivity.class));
+            }
+        });
+
+        TextView settingsButton = (TextView) layout.findViewById(R.id.fragment_navigation_drawer_settings);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

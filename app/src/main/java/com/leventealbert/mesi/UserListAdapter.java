@@ -1,6 +1,9 @@
 package com.leventealbert.mesi;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +43,20 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         User current = mData.get(position);
         holder.name.setText(current.getFullName());
 
+        if (current.isOnline()) {
+            holder.subTitle.setText("online");
+            holder.subTitle.setTextColor(mContext.getResources().getColor(R.color.accent_color));
+        } else {
+            holder.subTitle.setText("offline");
+            holder.subTitle.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
+        }
+
+        if (current.getNewMessagesCount() > 0) {
+            holder.messages.setText("" + current.getNewMessagesCount());
+        } else {
+            holder.messages.setVisibility(View.INVISIBLE);
+        }
+
         Picasso.with(mContext).load(current.getAvatar())
                 .transform(new RoundedTransformation(40, 4))
                 .error(R.drawable.ic_account_circle_grey600_48dp)
@@ -54,22 +71,35 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
-        TextView name;
         ImageView image;
+        TextView name;
+        TextView subTitle;
+        TextView messages;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            itemView.setClickable(true);
             itemView.setOnClickListener(this);
 
-            name = (TextView) itemView.findViewById(R.id.list_row_name);
             image = (ImageView) itemView.findViewById(R.id.list_row_image);
+            name = (TextView) itemView.findViewById(R.id.list_row_name);
+            subTitle = (TextView) itemView.findViewById(R.id.list_row_subtile);
+            messages = (TextView) itemView.findViewById(R.id.list_row_messages);
         }
 
         @Override
         public void onClick(View v) {
-            //Toast.makeText(v.getContext(), "The Item Clicked is: " + getPosition(), Toast.LENGTH_SHORT).show();
+            User current = mData.get(getPosition());
+
+            Intent intent = new Intent(v.getContext(), MessageActivity.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("id", current.getId());
+            bundle.putString("firstName", current.getFirstName());
+
+            intent.putExtras(bundle);
+
+            v.getContext().startActivity(intent);
         }
     }
 }

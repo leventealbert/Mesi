@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:paddingRight="16dp"
+    android:paddingLeft="18dp">
+
+    <ImageView
+        android:id="@+id/message_row_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="16dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_account_circle_grey600_48dp" />
+
+    <TextView
+        android:id="@+id/message_row_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:textColor="@color/primary_text"
+        android:textSize="16sp"
+        android:text="@string/user_list_row_full_name"
+        android:layout_alignParentTop="true"/>
+</RelativeLayout>

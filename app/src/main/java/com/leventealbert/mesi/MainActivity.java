@@ -3,6 +3,7 @@ package com.leventealbert.mesi;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,6 +17,12 @@ import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -31,9 +38,13 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         mToolBar = (Toolbar) findViewById(R.id.app_bar);
+        TextView toolbarTitle = (TextView) mToolBar.findViewById(R.id.app_bar_title);
+
+        toolbarTitle.setText(getTitle());
 
         setSupportActionBar(mToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -77,8 +88,22 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class MainPagerAdapter extends FragmentPagerAdapter {
+    public void setCurrentUser(User user) {
+        ImageView image = (ImageView) findViewById(R.id.fragment_navigation_drawer_user_image);
+        TextView name = (TextView) findViewById(R.id.fragment_navigation_drawer_user_name);
+        TextView subTitle = (TextView) findViewById(R.id.fragment_navigation_drawer_user_team);
 
+        name.setText(user.getFullName());
+        subTitle.setText(user.getEmail().split("@")[1]);
+
+        Picasso.with(getBaseContext()).load(user.getAvatar())
+                .transform(new RoundedTransformation(40, 4))
+                .error(R.drawable.ic_account_circle_grey600_48dp)
+                .placeholder(R.drawable.ic_account_circle_grey600_48dp)
+                .into(image);
+    }
+
+    class MainPagerAdapter extends FragmentPagerAdapter {
         String[] tabs;
         int[] icons = {R.drawable.ic_group_white_48dp, R.drawable.ic_style_white_48dp, R.drawable.ic_folder_open_white_48dp};
 
@@ -92,9 +117,10 @@ public class MainActivity extends ActionBarActivity {
             if(position == 0)
             {
                 return new UsersFragment();
-            }
-            else {
+            } else if (position == 1) {
                 return new ProjectsFragment();
+            } else {
+                return new FilesFragment();
             }
         }
 
