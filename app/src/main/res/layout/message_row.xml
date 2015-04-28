@@ -4,25 +4,44 @@
     android:layout_height="wrap_content"
     android:paddingBottom="8dp"
     android:paddingTop="8dp"
-    android:paddingRight="16dp"
-    android:paddingLeft="18dp">
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp">
 
     <ImageView
         android:id="@+id/message_row_image"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginRight="16dp"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="8dp"
         android:src="@drawable/ic_account_circle_grey600_48dp" />
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginLeft="54dp"
+        android:src="@drawable/arrow"/>
 
-    <TextView
-        android:id="@+id/message_row_message"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="72dp"
-        android:textColor="@color/primary_text"
-        android:textSize="16sp"
-        android:text="@string/user_list_row_full_name"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:layout_marginLeft="64dp"
+        android:padding="8dp"
+        android:background="#FFF">
+
+        <TextView
+            android:id="@+id/message_row_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_text"
+            android:textSize="16sp"
+            android:text="@string/message_row_message"/>
+        <TextView
+            android:id="@+id/message_row_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondary_text"
+            android:textSize="14sp"
+            android:text="@string/message_row_date"/>
+    </LinearLayout>
+
 </RelativeLayout>

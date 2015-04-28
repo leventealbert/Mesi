@@ -23,4 +23,7 @@
     <string name="action_save">Save</string>
     <string name="action_send">Send</string>
     <string name="title_activity_message">MessageActivity</string>
+    <string name="message_row_message">Message</string>
+    <string name="message_row_date">Date</string>
+    <string name="activity_message_hint">send a mesi...</string>
 </resources>

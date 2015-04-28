@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+
 
 public class MessageActivity extends BaseActivity {
 
@@ -32,6 +34,21 @@ public class MessageActivity extends BaseActivity {
         mReceiverId = bundle.getString("id");
 
         setToolBar("Mesi with " + bundle.getString("firstName"));
+
+        /*mark messages read*/
+        final ReadMessage mess = new ReadMessage(mReceiverId);
+        String json = new Gson().toJson(mess);
+        new AsyncHttpTask("PUT", json, new AsyncHttpTask.TaskListener() {
+            @Override
+            public void onFinished(String result) {
+                if (result.equals("")) {
+                    Toast.makeText(MessageActivity.this, "Message was NOT marked read!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MessageActivity.this, "" + result, Toast.LENGTH_LONG).show();
+                    mLayoutManager.scrollToPosition(mMessages.size());
+                }
+            }
+        }).execute("http://mesi.leventealbert.com/api/readMessages");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.activity_message_list);
         mLayoutManager = new LinearLayoutManager(this);
@@ -88,7 +105,7 @@ public class MessageActivity extends BaseActivity {
                 @Override
                 public void onFinished(String result) {
                     if (result.equals("")) {
-                        Toast.makeText(MessageActivity.this, "Invitation was NOT successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MessageActivity.this, "Message was NOT successful!", Toast.LENGTH_SHORT).show();
                     } else {
                         mMessages.add(message);
                         mAdapter.notifyItemInserted(mMessages.size() - 1);
@@ -97,6 +114,14 @@ public class MessageActivity extends BaseActivity {
                     }
                 }
             }).execute("http://mesi.leventealbert.com/api/sendMessage");
+        }
+    }
+
+    private class ReadMessage {
+        private String sender;
+
+        public ReadMessage(String sender){
+            this.sender = sender;
         }
     }
 }

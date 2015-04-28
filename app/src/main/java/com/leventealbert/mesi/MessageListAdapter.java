@@ -40,6 +40,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         Message current = mData.get(position);
         holder.message.setText(current.getMessage());
+        holder.date.setText(current.getTimeStamp());
 
         Picasso.with(mContext).load(BaseApplication.getAvatar(current.getFromId()))
                 .transform(new RoundedTransformation(40, 4))
@@ -57,12 +58,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
         ImageView image;
         TextView message;
+        TextView date;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             image = (ImageView) itemView.findViewById(R.id.message_row_image);
             message = (TextView) itemView.findViewById(R.id.message_row_message);
+            date = (TextView) itemView.findViewById(R.id.message_row_date);
         }
     }
 }

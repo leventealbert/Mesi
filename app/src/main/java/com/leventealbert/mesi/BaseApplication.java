@@ -12,8 +12,8 @@ import java.util.Map;
  */
 public class BaseApplication extends Application {
 
-    private static String mCurrentUserId = "41bde8a9-0bdb-4a8d-b491-3b9ae7789236";
-    //private static String mCurrentUserId = "ca92662c-4be0-4ae8-a55b-9ffa5b77b2fe";
+    //private static String mCurrentUserId = "41bde8a9-0bdb-4a8d-b491-3b9ae7789236";
+    private static String mCurrentUserId = "ca92662c-4be0-4ae8-a55b-9ffa5b77b2fe";
     private static User mCurrentUser;
     private static UserList mUsers;
     private static MessageList mMessages;
