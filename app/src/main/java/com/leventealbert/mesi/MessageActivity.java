@@ -1,6 +1,7 @@
 package com.leventealbert.mesi;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 public class MessageActivity extends BaseActivity {
 
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private MessageListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private String mReceiverId;
@@ -36,7 +38,8 @@ public class MessageActivity extends BaseActivity {
         setToolBar("Mesi with " + bundle.getString("firstName"));
 
         /*mark messages read*/
-        final ReadMessage mess = new ReadMessage(mReceiverId);
+        final HashMap<String,String> mess = new HashMap<>();
+        mess.put("sender",mReceiverId);
         String json = new Gson().toJson(mess);
         new AsyncHttpTask("PUT", json, new AsyncHttpTask.TaskListener() {
             @Override
@@ -44,7 +47,7 @@ public class MessageActivity extends BaseActivity {
                 if (result.equals("")) {
                     Toast.makeText(MessageActivity.this, "Message was NOT marked read!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MessageActivity.this, "" + result, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MessageActivity.this, "" + result, Toast.LENGTH_SHORT).show();
                     mLayoutManager.scrollToPosition(mMessages.size());
                 }
             }
@@ -56,18 +59,17 @@ public class MessageActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mMessages = new MessageList();
-
-        for (Message message : BaseApplication.getMessages()) {
-
-            if (message.getFromId().equals(mReceiverId) && message.getToId().equals(BaseApplication.getCurrentUserId()) ||
-                    message.getToId().equals(mReceiverId) && message.getFromId().equals(BaseApplication.getCurrentUserId())) {
-                mMessages.add(message);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_message_swipe_refresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.accent_color);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
             }
-        }
+        });
 
-        mAdapter = new MessageListAdapter(this, mMessages, R.layout.message_row);
-        mRecyclerView.setAdapter(mAdapter);
+        loadMessages();
 
         mLayoutManager.scrollToPosition(mMessages.size());
 
@@ -93,6 +95,43 @@ public class MessageActivity extends BaseActivity {
         });
     }
 
+    private void refreshItems() {
+        //getting messages
+        new AsyncHttpTask("GET", new AsyncHttpTask.TaskListener() {
+            @Override
+            public void onFinished(String result) {
+                try {
+                    MessageList messageList = new Gson().fromJson(result, MessageList.class);
+                    BaseApplication.setMessages(messageList);
+
+                    //all items loaded refresh layout
+                    loadMessages();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).execute("http://mesi.leventealbert.com/api/messages");
+    }
+
+    private void loadMessages() {
+
+        mMessages = new MessageList();
+
+        for (Message message : BaseApplication.getMessages()) {
+
+            if (message.getFromId().equals(mReceiverId) && message.getToId().equals(BaseApplication.getCurrentUserId()) ||
+                    message.getToId().equals(mReceiverId) && message.getFromId().equals(BaseApplication.getCurrentUserId())) {
+                mMessages.add(message);
+            }
+        }
+        // Update the adapter and notify data set changed
+        mAdapter = new MessageListAdapter(this, mMessages, R.layout.message_row);
+        mRecyclerView.setAdapter(mAdapter);
+
+        // Stop refresh animation
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
     private void sendMessage() {
         final EditText text = (EditText) findViewById(R.id.activity_message_text);
 
@@ -114,14 +153,6 @@ public class MessageActivity extends BaseActivity {
                     }
                 }
             }).execute("http://mesi.leventealbert.com/api/sendMessage");
-        }
-    }
-
-    private class ReadMessage {
-        private String sender;
-
-        public ReadMessage(String sender){
-            this.sender = sender;
         }
     }
 }

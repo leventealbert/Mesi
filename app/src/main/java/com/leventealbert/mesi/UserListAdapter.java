@@ -43,7 +43,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         User current = mData.get(position);
         holder.name.setText(current.getFullName());
 
-        if (current.isOnline()) {
+        if (current.getIsOnline()) {
             holder.subTitle.setText("online");
             holder.subTitle.setTextColor(mContext.getResources().getColor(R.color.accent_color));
         } else {

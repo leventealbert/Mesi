@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Mesi</string>
 
+    <string name="preference_file_key">com.leventealbert.mesi.preference</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
@@ -26,4 +28,19 @@
     <string name="message_row_message">Message</string>
     <string name="message_row_date">Date</string>
     <string name="activity_message_hint">send a mesi...</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">User Name</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="action_sign_in">Sign in</string>
+
+    <string name="error_invalid_credentials">Invalid credentials</string>
+    <string name="error_field_required">This field is required</string>
+
+    <!-- Google Analytics -->
+    <string name="google_analytics_property_id" translatable="false" templateMergeStrategy="preserve">
+        UA-62399336-1
+    </string>
 </resources>

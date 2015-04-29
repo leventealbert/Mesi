@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 
 public class UsersFragment extends BaseFragment {
@@ -26,6 +28,7 @@ public class UsersFragment extends BaseFragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.fragment_users_swipe_refresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.accent_color);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -34,13 +37,23 @@ public class UsersFragment extends BaseFragment {
             }
         });
 
+        //Initialize Google Analytics tracker
+        Tracker t = BaseApplication.getTracker(getActivity().getBaseContext(),
+                BaseApplication.TrackerName.APP_TRACKER);
+
+        // Set screen name.
+        t.setScreenName("Users List");
+
+        // Send a screen view.
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
         refreshItems();
 
         return layout;
     }
 
     private void refreshItems() {
-        //Getting user dat
+        //Getting user data
         new AsyncHttpTask("GET", new AsyncHttpTask.TaskListener() {
             @Override
             public void onFinished(String result) {

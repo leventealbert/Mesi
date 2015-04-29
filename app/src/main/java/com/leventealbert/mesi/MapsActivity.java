@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,6 +39,16 @@ public class MapsActivity extends BaseActivity {
         //Bundle b = getIntent().getExtras(); //Get the intent's extras
        // mUsers = b.getParcelable("users"); //get our list
         mUsers = BaseApplication.getUsers();
+
+        //Initialize Google Analytics tracker
+        Tracker t = BaseApplication.getTracker(getBaseContext(),
+                BaseApplication.TrackerName.APP_TRACKER);
+
+        // Set screen name.
+        t.setScreenName("Map");
+
+        // Send a screen view.
+        t.send(new HitBuilders.ScreenViewBuilder().build());
 
         setUpMapIfNeeded();
     }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -21,30 +22,14 @@ import java.util.List;
 
 public class NavigationDrawerFragment extends Fragment {
 
-//    private static final String PREF_FILE_NAME = "testpref";
-//    private static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
-
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-
-//    private boolean mUserLearnedDrawer;
-//    private boolean mFromSavedInstanceState;
 
     private View mContainerView;
 
 
     public NavigationDrawerFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-//        mUserLearnedDrawer = Boolean.valueOf(readFromPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, "false"));
-//        if (savedInstanceState != null) {
-//            mFromSavedInstanceState = true;
-//        }
     }
 
     @Override
@@ -69,6 +54,27 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
+        TextView logoutButton = (TextView) layout.findViewById(R.id.fragment_navigation_drawer_logout);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //marking user offline
+                new AsyncHttpTask("PUT", "", new AsyncHttpTask.TaskListener() {
+                    @Override
+                    public void onFinished(String result) {
+                        //clear CurrentUserId in application
+                        BaseApplication.setCurrentUserId("");
+                        BaseApplication.setPref(getActivity().getBaseContext(), "CurrentUserId", "");
+                    }
+                }).execute("http://mesi.leventealbert.com/api/offline");
+
+                Intent intent = new Intent(getActivity(),LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
         return layout;
     }
 
@@ -80,10 +86,6 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-//                if (!mUserLearnedDrawer) {
-//                    mUserLearnedDrawer = true;
-//                    saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, mUserLearnedDrawer + "");
-//                }
                 getActivity().invalidateOptionsMenu();
             }
 
@@ -93,9 +95,6 @@ public class NavigationDrawerFragment extends Fragment {
                 getActivity().invalidateOptionsMenu();
             }
         };
-//        if (!mUserLearnedDrawer && mFromSavedInstanceState) {
-//            mDrawerLayout.openDrawer(mContainerView);
-//        }
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerLayout.post(new Runnable() {
             @Override
@@ -104,14 +103,4 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
     }
-
-//    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
-//        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
-//        sharedPreferences.edit().putString(preferenceName, preferenceValue).apply();
-//    }
-//
-//    public static String readFromPreferences(Context context, String preferenceName, String preferenceValue) {
-//        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
-//        return sharedPreferences.getString(preferenceName, preferenceValue);
-//    }
 }

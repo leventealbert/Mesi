@@ -15,10 +15,14 @@ public class BaseActivity extends ActionBarActivity {
     }
 
     protected void setToolBar(){
-        setToolBar("");
+        setToolBar("", true);
     }
 
-    protected void setToolBar(String title) {
+    protected void setToolBar(String title){
+        setToolBar(title, true);
+    }
+
+    protected void setToolBar(String title, boolean homeButton) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.app_bar_title);
 
@@ -29,8 +33,14 @@ public class BaseActivity extends ActionBarActivity {
         }
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (homeButton) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } else {
+            getSupportActionBar().setHomeButtonEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setHomeAsUpIndicator(null);
+        }
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 

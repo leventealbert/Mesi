@@ -48,12 +48,15 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
                     break;
                 case "PUT":
                     /* for PUT request */
-                    conn.setDoOutput(true);
                     conn.setRequestMethod("PUT");
 
-                    OutputStream os = conn.getOutputStream();
-                    os.write(mJsonRequestBody.getBytes());
-                    os.flush();
+                    if (!mJsonRequestBody.equals("")) {
+                        conn.setDoOutput(true);
+
+                        OutputStream os = conn.getOutputStream();
+                        os.write(mJsonRequestBody.getBytes());
+                        os.flush();
+                    }
                     break;
                 default :
                     return "";
@@ -81,12 +84,8 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if (!result.equals("")) {
-            if (this.mTaskListener != null) {
-                mTaskListener.onFinished(result);
-            }
-        } else {
-            Log.e("ASYNC", "Failed to fetch data!");
+        if (this.mTaskListener != null) {
+            mTaskListener.onFinished(result);
         }
     }
 

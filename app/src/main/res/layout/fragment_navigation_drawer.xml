@@ -24,7 +24,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:background="@color/primary_color_light_opaque"
+            android:background="@color/primary_color_opaque"
             android:layout_alignParentBottom="true">
 
             <ImageView
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="72dp"
-                android:textColor="@color/primary_text"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"
                 android:text="@string/user_list_row_full_name" />
@@ -52,9 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="72dp"
                 android:layout_below="@+id/fragment_navigation_drawer_user_name"
-                android:text="online"
+                android:text="Team Domain"
                 android:textSize="14sp"
-                android:textColor="@color/secondary_text" />
+                android:textColor="@android:color/white" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -78,6 +78,14 @@
             android:layout_height="48dp"
             android:text="Settings"
             android:drawableLeft="@drawable/ic_settings_grey600_24dp"
+            style="@style/DrawerButton"/>
+        <TextView
+            android:id="@+id/fragment_navigation_drawer_logout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:text="Logout"
+            android:drawableLeft="@drawable/ic_exit_to_app_grey600_24dp"
             style="@style/DrawerButton"/>
 
     </LinearLayout>

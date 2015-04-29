@@ -19,10 +19,15 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -41,6 +46,26 @@ public class MainActivity extends ActionBarActivity {
         TextView toolbarTitle = (TextView) mToolBar.findViewById(R.id.app_bar_title);
 
         toolbarTitle.setText(getTitle());
+
+        //marking user online
+        new AsyncHttpTask("PUT", "", new AsyncHttpTask.TaskListener() {
+            @Override
+            public void onFinished(String result) {
+                if (result.equals("")) {
+                    Toast.makeText(MainActivity.this, "User was NOT marked online!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).execute("http://mesi.leventealbert.com/api/online");
+
+        //Initialize Google Analytics tracker
+        Tracker t = BaseApplication.getTracker(getBaseContext(),
+                BaseApplication.TrackerName.APP_TRACKER);
+
+        // Set screen name.
+        t.setScreenName("Main");
+
+        // Send a screen view.
+        t.send(new HitBuilders.ScreenViewBuilder().build());
 
         setSupportActionBar(mToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

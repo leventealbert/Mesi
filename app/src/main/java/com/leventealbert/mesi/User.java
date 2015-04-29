@@ -12,6 +12,7 @@ public class User {
     private String lng;
     private String avatar;
     private String teamId;
+    private Boolean isOnline;
 
     public String getId() {
         return id;
@@ -78,9 +79,10 @@ public class User {
         return firstName + ' ' + lastName;
     }
 
-    public Boolean isOnline() {
-        return firstName.startsWith("E") || firstName.startsWith("L");
+    public Boolean getIsOnline() {
+        return isOnline;
     }
+
 
     public int getNewMessagesCount(){
         int count = 0;
