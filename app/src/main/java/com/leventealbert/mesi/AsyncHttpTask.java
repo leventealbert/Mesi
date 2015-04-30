@@ -10,6 +10,11 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Class used to create a background task to download the json from the api.
+ *
+ * @author Levente Albert
+ */
 public class AsyncHttpTask extends AsyncTask<String, Void, String> {
 
     private String mJsonRequestBody;
@@ -17,17 +22,36 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
 
     private TaskListener mTaskListener;
 
+    /**
+     * constructor
+     *
+     * @param method String
+     * @param listener TaskListener
+     */
     public AsyncHttpTask(String method, TaskListener listener) {
         mMethod = method;
         mTaskListener = listener;
     }
 
+    /**
+     * constructor
+     *
+     * @param method String
+     * @param json String
+     * @param listener TaskListener
+     */
     public AsyncHttpTask(String method, String json, TaskListener listener) {
         mJsonRequestBody = json;
         mMethod = method;
         mTaskListener = listener;
     }
 
+    /**
+     * Function to trigger the start of the background process
+     *
+     * @param params String
+     * @return String
+     */
     @Override
     protected String doInBackground(String... params) {
         InputStream inputStream = null;
@@ -82,14 +106,23 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
         return result;
     }
 
+    /**
+     * function to be called when the result came back
+     *
+     * @param result String
+     */
     @Override
     protected void onPostExecute(String result) {
         if (this.mTaskListener != null) {
+            //calling the callback function
             mTaskListener.onFinished(result);
         }
     }
 
+    /**
+     * interfaceto be able to define the listerners for the callback
+     */
     public interface TaskListener {
-        public void onFinished(String result);
+        void onFinished(String result);
     }
 }

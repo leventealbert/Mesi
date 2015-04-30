@@ -23,6 +23,11 @@ import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 
+/**
+ * map activity
+ *
+ * @author Levente Albert
+ */
 public class MapsActivity extends BaseActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -30,6 +35,10 @@ public class MapsActivity extends BaseActivity {
 
     private ArrayList<User> mUsers;
 
+    /**
+     * function that is called when the activity is created
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,18 +139,36 @@ public class MapsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Class used to be able to create a custom marker with the icon being loaded from the web on the fly
+     */
     public class CustomMarker implements Target {
         Marker mMarker;
 
+        /**
+         * Constructor
+         *
+         * @param marker Marker
+         */
         CustomMarker(Marker marker) {
             mMarker = marker;
         }
 
+        /**
+         * function to return the hashcode of the marker
+         *
+         * @return int
+         */
         @Override
         public int hashCode() {
             return mMarker.hashCode();
         }
 
+        /**
+         * function used for the comparison
+         * @param o Object
+         * @return boolean
+         */
         @Override
         public boolean equals(Object o) {
             if(o instanceof CustomMarker) {
@@ -152,15 +179,31 @@ public class MapsActivity extends BaseActivity {
             }
         }
 
+        /**
+         * seting icon of the marker after the bitmap is loaded
+         *
+         * @param bitmap Bitmap
+         * @param from LoadedFrom
+         */
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
             mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
         }
 
+        /**
+         * called on failed
+         *
+         * @param errorDrawable Drawable
+         */
         @Override
         public void onBitmapFailed(Drawable errorDrawable) {
         }
 
+        /**
+         * called on prepare load
+         *
+         * @param placeHolderDrawable Drawable
+         */
         @Override
         public void onPrepareLoad(Drawable placeHolderDrawable) {
 

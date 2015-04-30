@@ -17,7 +17,11 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 
-
+/**
+ * message activity where the messaging happens
+ *
+ * @author Levente Albert
+ */
 public class MessageActivity extends BaseActivity {
 
     private RecyclerView mRecyclerView;
@@ -27,6 +31,10 @@ public class MessageActivity extends BaseActivity {
     private String mReceiverId;
     private MessageList mMessages;
 
+    /**
+     * function that is called when the activity is created
+     * @param savedInstanceState bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +55,6 @@ public class MessageActivity extends BaseActivity {
                 if (result.equals("")) {
                     Toast.makeText(MessageActivity.this, "Message was NOT marked read!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MessageActivity.this, "" + result, Toast.LENGTH_SHORT).show();
                     mLayoutManager.scrollToPosition(mMessages.size());
                 }
             }
@@ -69,8 +76,10 @@ public class MessageActivity extends BaseActivity {
             }
         });
 
+        //load the messages
         loadMessages();
 
+        //scroll down to the bottom so the last message is seen
         mLayoutManager.scrollToPosition(mMessages.size());
 
         Button send = (Button) findViewById(R.id.activity_message_send);
@@ -95,6 +104,9 @@ public class MessageActivity extends BaseActivity {
         });
     }
 
+    /**
+     * refresh items is called when the swipedown is triggered
+     */
     private void refreshItems() {
         //getting messages
         new AsyncHttpTask("GET", new AsyncHttpTask.TaskListener() {
@@ -113,6 +125,9 @@ public class MessageActivity extends BaseActivity {
         }).execute("http://mesi.leventealbert.com/api/messages");
     }
 
+    /**
+     * load the messages is called after the data came back from the api call
+     */
     private void loadMessages() {
 
         mMessages = new MessageList();
@@ -132,6 +147,9 @@ public class MessageActivity extends BaseActivity {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+    /**
+     * method used to send the message
+     */
     private void sendMessage() {
         final EditText text = (EditText) findViewById(R.id.activity_message_text);
 

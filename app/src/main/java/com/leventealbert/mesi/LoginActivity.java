@@ -15,12 +15,21 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 
-
+/**
+ * Login activtiy
+ *
+ * @author Levente Albert
+ */
 public class LoginActivity extends BaseActivity {
 
     private EditText mUsername;
     private EditText mPassword;
 
+    /**
+     * method that is called on the activty create
+     *
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +61,9 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    /**
+     * method to login
+     */
     public void attemptLogin() {
         // Reset errors.
         mUsername.setError(null);
@@ -93,7 +105,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onFinished(String result) {
                     if (!result.equals("") && !result.equals("null")) {
-                        HashMap<String, String> map = new Gson().fromJson(result, HashMap.class);
+                        HashMap<String, String> map = (HashMap<String, String>) new Gson().fromJson(result, HashMap.class);
                         if (!map.get("id").equals("")) {
                             Toast.makeText(LoginActivity.this, "Welcome, " + username + "!", Toast.LENGTH_SHORT).show();
                             BaseApplication.setPref(getBaseContext(), "CurrentUserId", map.get("id"));

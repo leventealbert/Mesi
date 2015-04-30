@@ -24,18 +24,27 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
+import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * Main activity where most of the magic happens
+ *
+ * @author Levente Albert
+ */
 public class MainActivity extends ActionBarActivity {
 
     private Toolbar mToolBar;
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
 
+    /**
+     * function that is called when the activity is created
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +101,12 @@ public class MainActivity extends ActionBarActivity {
         mTabs.setViewPager(mPager);
     }
 
+    /**
+     * function called when the menu is being created to inflate the menu
+     *
+     * @param menu menu
+     * @return boolean
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -99,6 +114,12 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+    /**
+     * called on the action items selection
+     *
+     * @param item MenuItem
+     * @return boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -113,6 +134,11 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * method used for setting the current user on the drawer layout
+     *
+     * @param user User
+     */
     public void setCurrentUser(User user) {
         ImageView image = (ImageView) findViewById(R.id.fragment_navigation_drawer_user_image);
         TextView name = (TextView) findViewById(R.id.fragment_navigation_drawer_user_name);
@@ -128,15 +154,28 @@ public class MainActivity extends ActionBarActivity {
                 .into(image);
     }
 
+    /**
+     * pager adapter uses for the sliding tabs
+     */
     class MainPagerAdapter extends FragmentPagerAdapter {
         String[] tabs;
         int[] icons = {R.drawable.ic_group_white_48dp, R.drawable.ic_style_white_48dp, R.drawable.ic_folder_open_white_48dp};
 
+        /**
+         * constructor
+         *
+         * @param fm FragmentManager
+         */
         public MainPagerAdapter(FragmentManager fm) {
             super(fm);
             tabs = getResources().getStringArray(R.array.activity_main_tabs);
         }
 
+        /**
+         * function used to retrive the correct fragment for a particular tab
+         * @param position int
+         * @return Fragment
+         */
         @Override
         public Fragment getItem(int position) {
             if(position == 0)
@@ -149,16 +188,29 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
+        /**
+         * function to retrive the title of the tab and in this case ads the icon to the spannable string.
+         *
+         * @param position int
+         * @return CharSequence
+         */
         @Override
         public CharSequence getPageTitle(int position) {
             Drawable image = getResources().getDrawable(icons[position]);
-            image.setBounds(0, 0, image.getIntrinsicWidth() / 2, image.getIntrinsicHeight() / 2);
+            if (image != null) {
+                image.setBounds(0, 0, image.getIntrinsicWidth() / 2, image.getIntrinsicHeight() / 2);
+            }
             SpannableString sb = new SpannableString(" ");
             ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
             sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             return sb;
         }
 
+        /**
+         * returns the count of the tabs
+         *
+         * @return int
+         */
         @Override
         public int getCount() {
             return 3;

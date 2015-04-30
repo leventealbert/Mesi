@@ -13,7 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author levencus
+ * base application class holds application wide parameters and methods
+ *
+ * @author Levente Albert
  */
 public class BaseApplication extends Application {
 
@@ -30,8 +32,15 @@ public class BaseApplication extends Application {
         ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
     }
 
-    static HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+    static HashMap<TrackerName, Tracker> mTrackers = new HashMap<>();
 
+    /**
+     * static function to return an instance of a tracker fro Google Analytics
+     *
+     * @param context Context
+     * @param trackerId TrackerName
+     * @return Tracker
+     */
     static synchronized Tracker getTracker(Context context, TrackerName trackerId) {
         if (!mTrackers.containsKey(trackerId)) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
@@ -49,25 +58,50 @@ public class BaseApplication extends Application {
 
     private static Map<String, String> mMap;
 
+    /**
+     * get current user id
+     *
+     * @return String
+     */
     public static String getCurrentUserId() {
         return mCurrentUserId;
     }
 
+    /**
+     * set the current user id
+     *
+     * @param currentUserId String
+     */
     public static void setCurrentUserId(String currentUserId) {
         mCurrentUserId = currentUserId;
     }
 
+    /**
+     * get current user
+     *
+     * @return User
+     */
     public static User getCurrentUser() {
         return mCurrentUser;
     }
 
+    /**
+     * get all the users
+     *
+     * @return User
+     */
     public static UserList getUsers() {
         return mUsers;
     }
 
+    /**
+     * set all the users
+     *
+     * @param users UserList
+     */
     public static void setUsers(UserList users) {
         mUsers = new UserList();
-        mMap = new HashMap<String, String>();
+        mMap = new HashMap<>();
 
         for (User user : users) {
             if (!user.getId().equals("")){
@@ -82,24 +116,53 @@ public class BaseApplication extends Application {
         users.clear();
     }
 
+    /**
+     * getting the avatar from the hashmap
+     *
+     * @param userId String
+     * @return String
+     */
     public static String getAvatar(String userId){
         return mMap.get(userId);
     }
 
-    public static ArrayList<Message> getMessages() {
+    /**
+     * Get all the messages
+     *
+     * @return MessageList
+     */
+    public static MessageList getMessages() {
         return mMessages;
     }
 
+    /**
+     * Set all the messages
+     *
+     * @param messages MessageList
+     */
     public static void setMessages(MessageList messages) {
         mMessages = messages;
     }
 
+    /**
+     * function used to get item from shared preferences
+     *
+     * @param context Context
+     * @param key String
+     * @return String
+     */
     public static String getPref(Context context, String key){
         SharedPreferences prefs = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         return prefs.getString(key, "");
     }
 
+    /**
+     * Method used to save a string to the shared preferences
+     * @param context Context
+     * @param key String
+     * @param value String
+     */
     public static void setPref(Context context, String key, String value) {
         SharedPreferences prefs = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);

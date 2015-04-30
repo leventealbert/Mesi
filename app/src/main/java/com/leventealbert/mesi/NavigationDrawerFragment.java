@@ -19,7 +19,11 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * class that is handling the navitaion drawer
+ *
+ * @author Levente Albert
+ */
 public class NavigationDrawerFragment extends Fragment {
 
     private ActionBarDrawerToggle mDrawerToggle;
@@ -27,17 +31,28 @@ public class NavigationDrawerFragment extends Fragment {
 
     private View mContainerView;
 
-
+    /**
+     * constuctor
+     */
     public NavigationDrawerFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * function called when the view is created
+     *
+     * @param inflater LayoutInflater
+     * @param container ViewGroup
+     * @param savedInstanceState Bundle
+     * @return View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
+        //setting the invite button
         TextView inviteButton = (TextView) layout.findViewById(R.id.fragment_navigation_drawer_invite_user);
         inviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +61,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
+        //setting the setting button
         TextView settingsButton = (TextView) layout.findViewById(R.id.fragment_navigation_drawer_settings);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +70,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
+        //setting the logout button
         TextView logoutButton = (TextView) layout.findViewById(R.id.fragment_navigation_drawer_logout);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,23 +95,41 @@ public class NavigationDrawerFragment extends Fragment {
         return layout;
     }
 
+    /**
+     * method that is being called from the main activity to setup the drawer
+     *
+     * @param fragmentId int
+     * @param drawerLayout DrawerLayout
+     * @param toolBar Toolbar
+     */
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolBar) {
         mContainerView = getActivity().findViewById(fragmentId);
 
         mDrawerLayout = drawerLayout;
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolBar, R.string.drawer_open, R.string.drawer_close) {
+
+            /**
+             * called on the drawer opened
+             * @param drawerView View
+             */
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 getActivity().invalidateOptionsMenu();
             }
 
+            /**
+             * called when the drawer is closed
+             * @param drawerView View
+             */
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 getActivity().invalidateOptionsMenu();
             }
         };
+
+        // setting the drawer listener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerLayout.post(new Runnable() {
             @Override

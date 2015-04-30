@@ -14,11 +14,22 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 
+/**
+ * users list fragment that lists all the users online or offline
+ */
 public class UsersFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
+    /**
+     * function called when the view is created
+     *
+     * @param inflater LayoutINflater
+     * @param container ViewGroup
+     * @param savedInstanceState Bundle
+     * @return View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_users, container, false);
@@ -27,6 +38,7 @@ public class UsersFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        //setting up the swipe refresh layout
         mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.fragment_users_swipe_refresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.accent_color);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -52,6 +64,9 @@ public class UsersFragment extends BaseFragment {
         return layout;
     }
 
+    /**
+     * method called for refreshing the items by the swiperefresh layout and oncreate
+     */
     private void refreshItems() {
         //Getting user data
         new AsyncHttpTask("GET", new AsyncHttpTask.TaskListener() {
@@ -86,6 +101,9 @@ public class UsersFragment extends BaseFragment {
         }).execute("http://mesi.leventealbert.com/api/messages");
     }
 
+    /**
+     * method called after the data is received from the api call
+     */
     private void onItemsLoadComplete() {
         // Update the adapter and notify data set changed
         mRecyclerView.setAdapter(new UserListAdapter(getActivity(), BaseApplication.getUsers(), R.layout.list_row));

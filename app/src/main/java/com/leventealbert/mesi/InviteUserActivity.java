@@ -10,9 +10,18 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-
+/**
+ * invite user activity
+ *
+ * @author Levente Albert
+ */
 public class InviteUserActivity extends BaseActivity {
 
+    /**
+     * method called when the activity is created
+     *
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +29,12 @@ public class InviteUserActivity extends BaseActivity {
         setToolBar();
     }
 
+    /**
+     * function called when the menu is being created to inflate the menu
+     *
+     * @param menu Menu
+     * @return boolean
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -27,6 +42,12 @@ public class InviteUserActivity extends BaseActivity {
         return true;
     }
 
+    /**
+     * called on the action items selection
+     *
+     * @param item MenuItem
+     * @return boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -35,12 +56,16 @@ public class InviteUserActivity extends BaseActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_send) {
+            //saving user and sending invitation
             saveUser();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * method to save the user
+     */
     private void saveUser() {
 
         EditText firstName = (EditText) findViewById(R.id.invite_user_first_name);

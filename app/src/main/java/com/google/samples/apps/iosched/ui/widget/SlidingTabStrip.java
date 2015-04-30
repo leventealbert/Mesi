@@ -1,4 +1,4 @@
-package com.leventealbert.mesi;
+package com.google.samples.apps.iosched.ui.widget;
 
 /*
  * Copyright 2014 Google Inc. All rights reserved.
@@ -44,7 +44,7 @@ class SlidingTabStrip extends LinearLayout {
     private int mSelectedPosition;
     private float mSelectionOffset;
 
-    private SlidingTabLayout.TabColorizer mCustomTabColorizer;
+    private com.google.samples.apps.iosched.ui.widget.SlidingTabLayout.TabColorizer mCustomTabColorizer;
     private final SimpleTabColorizer mDefaultTabColorizer;
 
     SlidingTabStrip(Context context) {

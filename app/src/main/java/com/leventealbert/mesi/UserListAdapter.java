@@ -17,6 +17,11 @@ import com.squareup.picasso.Picasso;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class used for populating the users list
+ *
+ * @author Levente Albert
+ */
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder>{
 
     private LayoutInflater mInflator;
@@ -25,6 +30,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     private List<User> mData = Collections.emptyList();
 
+    /**
+     * constructor
+     *
+     * @param context Context
+     * @param data List<User>
+     * @param viewResource int
+     */
     public UserListAdapter(Context context, List<User> data, int viewResource){
         mInflator = LayoutInflater.from(context);
         mData = data;
@@ -32,12 +44,25 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         mContext = context;
     }
 
+    /**
+     * function is used to create the view holder
+     *
+     * @param viewType    int
+     * @param parent      ViewGroup
+     * @return ViewHolder
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflator.inflate(mViewResource, parent, false);
         return new ViewHolder(view);
     }
 
+    /**
+     * method is used to bind the view holder
+     *
+     * @param position    int
+     * @param holder      ViewHolder
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         User current = mData.get(position);
@@ -64,11 +89,19 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
                 .into(holder.image);
     }
 
+    /**
+     * function is used to get the count of items
+     *
+     * @return int
+     */
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
+    /**
+     * class is used for the view holder for the recyclerview
+     */
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
         ImageView image;
@@ -76,6 +109,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         TextView subTitle;
         TextView messages;
 
+        /**
+         * public constructor
+         * @param itemView View
+         */
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -87,6 +124,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             messages = (TextView) itemView.findViewById(R.id.list_row_messages);
         }
 
+        /**
+         * function to handle the item click
+         *
+         * @param v View
+         */
         @Override
         public void onClick(View v) {
             User current = mData.get(getPosition());

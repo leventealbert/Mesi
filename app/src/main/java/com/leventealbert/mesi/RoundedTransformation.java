@@ -9,6 +9,11 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Shader;
 
+/**
+ * class that is being used for the transformation to make the images round with stroke for the avatars
+ *
+ * @author Levente Albert
+ */
 public class RoundedTransformation implements com.squareup.picasso.Transformation {
     private final int radius;
     private final int margin;  // dp
@@ -20,12 +25,19 @@ public class RoundedTransformation implements com.squareup.picasso.Transformatio
         this.margin = margin;
     }
 
+    /**
+     * function that does the transformation of the bitmap
+     *
+     * @param source Bitmap
+     * @return Bitmap
+     */
     @Override
     public Bitmap transform(final Bitmap source) {
 
-
         final Paint paint = new Paint();
         paint.setAntiAlias(true);
+
+        //using shader to be more efficient
         paint.setShader(new BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
         paint.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.DST_OVER));
 
@@ -38,6 +50,7 @@ public class RoundedTransformation implements com.squareup.picasso.Transformatio
             source.recycle();
         }
 
+        //adding the stroke to the image
         Paint paint1 = new Paint();
         paint1.setColor(Color.LTGRAY);
         paint1.setStyle(Paint.Style.STROKE);
@@ -49,6 +62,11 @@ public class RoundedTransformation implements com.squareup.picasso.Transformatio
         return output;
     }
 
+    /**
+     * return the key
+     *
+     * @return String
+     */
     @Override
     public String key() {
         return "rounded";

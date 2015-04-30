@@ -15,6 +15,11 @@ import com.squareup.picasso.Picasso;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class used for populating the message list
+ *
+ * @author Levente Albert
+ */
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder>{
 
     private LayoutInflater mInflator;
@@ -23,6 +28,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     private List<Message> mData = Collections.emptyList();
 
+    /**
+     * constructor
+     *
+     * @param context Context
+     * @param data List<Message>
+     * @param viewResource int
+     */
     public MessageListAdapter(Context context, List<Message> data, int viewResource){
         mInflator = LayoutInflater.from(context);
         mData = data;
@@ -30,12 +42,25 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         mContext = context;
     }
 
+    /**
+     * function is used to create the view holder
+     *
+     * @param viewType    int
+     * @param parent      ViewGroup
+     * @return ViewHolder
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflator.inflate(mViewResource, parent, false);
         return new ViewHolder(view);
     }
 
+    /**
+     * method is used to bind the view holder
+     *
+     * @param position    int
+     * @param holder      ViewHolder
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Message current = mData.get(position);
@@ -49,17 +74,29 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
                 .into(holder.image);
     }
 
+    /**
+     * function is used to get the count of items
+     *
+     * @return int
+     */
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
+    /**
+     * class is used for the view holder for the recyclerview
+     */
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView image;
         TextView message;
         TextView date;
 
+        /**
+         * public constructor
+         * @param itemView View
+         */
         public ViewHolder(View itemView) {
             super(itemView);
 
