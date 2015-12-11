@@ -1,92 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.leventealbert.mesi.NavigationDrawerFragment"
     android:background="@color/divider_color_dark">
 
-    <RelativeLayout
-        android:id="@+id/fragment_navigation_drawer_image_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/message"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:id="@+id/fragment_navigation_drawer_image"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/mesi_logo"
-            android:adjustViewBounds="true"
-            android:padding="20dp"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:background="@color/primary_color_opaque"
-            android:layout_alignParentBottom="true">
-
-            <ImageView
-                android:id="@+id/fragment_navigation_drawer_user_image"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/ic_account_circle_grey600_48dp" />
-
-            <TextView
-                android:id="@+id/fragment_navigation_drawer_user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="72dp"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"
-                android:text="@string/user_list_row_full_name" />
-
-            <TextView
-                android:id="@+id/fragment_navigation_drawer_user_team"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="72dp"
-                android:layout_below="@+id/fragment_navigation_drawer_user_name"
-                android:text="Team Domain"
-                android:textSize="14sp"
-                android:textColor="@android:color/white" />
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/fragment_navigation_drawer_view"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/fragment_navigation_drawer_image_wrapper"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/fragment_navigation_drawer_invite_user"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="Invite User"
-            android:drawableLeft="@drawable/ic_perm_identity_grey600_24dp"
-            style="@style/DrawerButton"/>
-        <TextView
-            android:id="@+id/fragment_navigation_drawer_settings"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="Settings"
-            android:drawableLeft="@drawable/ic_settings_grey600_24dp"
-            style="@style/DrawerButton"/>
-        <TextView
-            android:id="@+id/fragment_navigation_drawer_logout"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:text="Logout"
-            android:drawableLeft="@drawable/ic_exit_to_app_grey600_24dp"
-            style="@style/DrawerButton"/>
-
-    </LinearLayout>
+        android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/menu_drawer" />
 </RelativeLayout>

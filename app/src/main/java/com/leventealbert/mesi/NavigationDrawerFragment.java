@@ -3,11 +3,14 @@ package com.leventealbert.mesi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +30,7 @@ import java.util.List;
 public class NavigationDrawerFragment extends Fragment {
 
     private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
 
     private View mContainerView;
@@ -52,43 +56,38 @@ public class NavigationDrawerFragment extends Fragment {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
-        //setting the invite button
-        TextView inviteButton = (TextView) layout.findViewById(R.id.fragment_navigation_drawer_invite_user);
-        inviteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), InviteUserActivity.class));
-            }
-        });
+        NavigationView mNavigationView = (NavigationView) layout.findViewById(R.id.fragment_navigation_drawer_view);
 
-        //setting the setting button
-        TextView settingsButton = (TextView) layout.findViewById(R.id.fragment_navigation_drawer_settings);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-            }
-        });
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                menuItem.setChecked(true);
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_drawer_invite:
+                        startActivity(new Intent(getActivity(), InviteUserActivity.class));
+                        return true;
+                    case R.id.menu_drawer_settings:
+                        startActivity(new Intent(getActivity(), SettingsActivity.class));
+                        return true;
+                    case R.id.menu_drawer_logout:
+                        //marking user offline
+                        new AsyncHttpTask("PUT", "", new AsyncHttpTask.TaskListener() {
+                            @Override
+                            public void onFinished(String result) {
+                                //clear CurrentUserId in application
+                                BaseApplication.setCurrentUserId("");
+                                BaseApplication.setPref(getActivity().getBaseContext(), "CurrentUserId", "");
+                            }
+                        }).execute("http://mesi.leventealbert.com/api/offline");
 
-        //setting the logout button
-        TextView logoutButton = (TextView) layout.findViewById(R.id.fragment_navigation_drawer_logout);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //marking user offline
-                new AsyncHttpTask("PUT", "", new AsyncHttpTask.TaskListener() {
-                    @Override
-                    public void onFinished(String result) {
-                        //clear CurrentUserId in application
-                        BaseApplication.setCurrentUserId("");
-                        BaseApplication.setPref(getActivity().getBaseContext(), "CurrentUserId", "");
-                    }
-                }).execute("http://mesi.leventealbert.com/api/offline");
-
-                Intent intent = new Intent(getActivity(),LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                getActivity().finish();
+                        Intent intent = new Intent(getActivity(),LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        getActivity().finish();
+                        return true;
+                    default:
+                        return true;
+                }
             }
         });
 
